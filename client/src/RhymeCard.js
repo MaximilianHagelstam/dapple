@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CardContent, Typography, Card } from '@material-ui/core';
+import { v1 as uuidv1 } from 'uuid';
 
 const useStyles = makeStyles({
   root: {
@@ -22,10 +23,11 @@ const RhymeCard = ({ rhymes }) => {
       <CardContent>
         {rhymes.map((rhyme) => (
           <Typography
+            key={uuidv1()}
             className={classes.pos}
             gutterBottom
-            variant="h5"
-            component="h2"
+            variant="body1"
+            component="h5"
           >
             {rhyme}
           </Typography>

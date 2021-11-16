@@ -6,6 +6,7 @@ import {
   Box,
   Typography,
   Container,
+  CircularProgress,
 } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,14 +16,10 @@ import RhymeCard from './RhymeCard';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
@@ -39,15 +36,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function App() {
+const App = () => {
   const [word, setWord] = useState('');
   const [rhymes, setRhymes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    rhymeService.getAll(word).then((res) => setRhymes(res.data));
+    setLoading(true);
+
+    const rhymes = await rhymeService.getAll(word);
+    setRhymes(rhymes);
+
+    setLoading(false);
   };
 
   const onChange = (e) => {
@@ -63,35 +66,31 @@ export default function App() {
         </Typography>
 
         <br />
-        <br />
 
-        <form onSubmit={onSubmit} noValidate>
+        <form onSubmit={onSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}></Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
                 required
                 fullWidth
-                multiline
+                variant="standard"
                 id="word"
                 label="Word"
                 name="word"
-                autoComplete="etext"
                 onChange={onChange}
               />
             </Grid>
           </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="large"
-          >
-            Search
-          </Button>
+          {loading ? (
+            <Button disabled variant="contained" color="primary">
+              Loading...
+            </Button>
+          ) : (
+            <Button type="submit" variant="contained" color="primary">
+              Search
+            </Button>
+          )}
         </form>
       </div>
 
@@ -102,4 +101,6 @@ export default function App() {
       </Box>
     </Container>
   );
-}
+};
+
+export default App;
