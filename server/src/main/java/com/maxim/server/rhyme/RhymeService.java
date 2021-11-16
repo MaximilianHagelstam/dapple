@@ -1,5 +1,8 @@
 package com.maxim.server.rhyme;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +22,7 @@ public class RhymeService {
         this.rhymeRepository = rhymeRepository;
     }
 
-    public String[] findRhymes(String word) throws IOException, InterruptedException {
+    public String[] findRhymes(String word) throws IOException, InterruptedException, JSONException {
         List<Rhyme> rhymes = rhymeRepository.findByWord(word);
 
         if (rhymes.isEmpty()) {
@@ -31,7 +34,12 @@ public class RhymeService {
             HttpResponse<String> response =
                     client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println(response.body());
+            JSONArray jsonArray = new JSONArray(response.body());
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObj = jsonArray.getJSONObject(i);
+                System.out.println(jsonObj);
+            }
 
             return new String[]{"not found"};
         }
