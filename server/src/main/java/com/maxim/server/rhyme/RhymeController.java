@@ -2,10 +2,7 @@ package com.maxim.server.rhyme;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -19,6 +16,7 @@ public class RhymeController {
         this.rhymeService = rhymeService;
     }
 
+    @CrossOrigin
     @GetMapping
     public String[] addTask(@RequestParam String word) throws IOException, InterruptedException, JSONException {
         return rhymeService.findRhymes(word);

@@ -54,6 +54,7 @@ public class RhymeService {
             return rhymesArray;
         }
 
+
         return rhymes.get(0).getRhymes();
     }
 }
