@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("api/rhyme")
 public class RhymeController {
@@ -17,7 +19,7 @@ public class RhymeController {
     }
 
     @GetMapping
-    public String[] addTask(@RequestParam String word) {
+    public String[] addTask(@RequestParam String word) throws IOException, InterruptedException {
         return rhymeService.findRhymes(word);
     }
 }
