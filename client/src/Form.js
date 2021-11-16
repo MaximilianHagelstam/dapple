@@ -1,33 +1,40 @@
 import React from 'react';
-import { Button, TextField, Grid } from '@material-ui/core';
+import { Button, TextField, Grid, Box } from '@material-ui/core';
 
 const Form = ({ onSubmit, onChange, loading }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <Grid item xs={6} md={8}>
-        <TextField
-          required
-          fullWidth
-          variant="standard"
-          id="word"
-          label="Word"
-          name="word"
-          onChange={onChange}
-        />
-      </Grid>
-
-      <Grid item xs={6} md={4}>
-        {loading ? (
-          <Button disabled variant="contained" color="primary">
-            Loading...
-          </Button>
-        ) : (
-          <Button type="submit" variant="contained" color="primary">
-            Search
-          </Button>
-        )}
-      </Grid>
-    </form>
+    <Box pt={2} pb={2}>
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={1} alignItems="center">
+          <Grid item xs={6}>
+            <TextField
+              required
+              variant="standard"
+              id="word"
+              label="Word"
+              name="word"
+              onChange={onChange}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            {loading ? (
+              <Button disabled fullWidth variant="outlined" color="primary">
+                Loading
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                type="submit"
+                variant="outlined"
+                color="primary"
+              >
+                Search
+              </Button>
+            )}
+          </Grid>
+        </Grid>
+      </form>
+    </Box>
   );
 };
 
