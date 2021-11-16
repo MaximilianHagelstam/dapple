@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  TextField,
-  Grid,
-  Box,
-  Typography,
-  Container,
-  CircularProgress,
-} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Typography, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import rhymeService from './services/rhymeService';
+
 import Copyright from './Copyright';
 import RhymeCard from './RhymeCard';
+import Form from './Form';
+import rhymeService from './services/rhymeService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,8 +35,6 @@ const App = () => {
   const [rhymes, setRhymes] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const classes = useStyles();
-
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -57,9 +49,12 @@ const App = () => {
     setWord(e.target.value);
   };
 
+  const classes = useStyles();
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
       <div className={classes.paper}>
         <Typography component="h1" variant="h4">
           Dapple
@@ -67,38 +62,12 @@ const App = () => {
 
         <br />
 
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                variant="standard"
-                id="word"
-                label="Word"
-                name="word"
-                onChange={onChange}
-              />
-            </Grid>
-          </Grid>
+        <Form onSubmit={onSubmit} onChange={onChange} loading={loading} />
 
-          {loading ? (
-            <Button disabled variant="contained" color="primary">
-              Loading...
-            </Button>
-          ) : (
-            <Button type="submit" variant="contained" color="primary">
-              Search
-            </Button>
-          )}
-        </form>
+        <RhymeCard rhymes={rhymes} />
       </div>
 
-      <RhymeCard rhymes={rhymes} />
-
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Copyright />
     </Container>
   );
 };
