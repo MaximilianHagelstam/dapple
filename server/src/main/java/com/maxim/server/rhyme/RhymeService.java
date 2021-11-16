@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -28,7 +29,7 @@ public class RhymeService {
         if (rhymes.isEmpty()) {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.datamuse.com/words?rel_rhy=games"))
+                    .uri(URI.create("https://api.datamuse.com/words?rel_rhy=" + word))
                     .build();
 
             HttpResponse<String> response =
@@ -36,12 +37,19 @@ public class RhymeService {
 
             JSONArray jsonArray = new JSONArray(response.body());
 
+            List<String> rhymesList = new ArrayList<>();
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
-                System.out.println(jsonObj);
+                rhymesList.add(jsonObj.getString("word"));
             }
 
-            return new String[]{"not found"};
+            String[] rhymesArray = new String[ rhymesList.size() ];
+            rhymesList.toArray( rhymesArray );
+
+            rhymeRepository.save(new Rhyme(word, rhymesArray));
+
+            return rhymesArray;
         }
 
         return rhymes.get(0).getRhymes();
