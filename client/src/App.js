@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import rhymeService from './services/rhymeService';
+import Typography from '@mui/material/Typography';
 
 const App = () => {
   const [rhymes, setRhymes] = useState([]);
@@ -9,12 +10,17 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>James</h1>
+    <>
+      <Typography variant="h3" component="div" gutterBottom>
+        Rhymes
+      </Typography>
+
       {rhymes.map((rhyme) => (
-        <p>{rhyme}</p>
+        <Typography variant="body1" component="div" gutterBottom>
+          {rhyme}
+        </Typography>
       ))}
-    </div>
+    </>
   );
 };
 
