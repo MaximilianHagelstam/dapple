@@ -44,10 +44,12 @@ public class RhymeService {
                 rhymesList.add(jsonObj.getString("word"));
             }
 
-            String[] rhymesArray = new String[ rhymesList.size() ];
-            rhymesList.toArray( rhymesArray );
+            String[] rhymesArray = new String[rhymesList.size()];
+            rhymesList.toArray(rhymesArray);
 
-            rhymeRepository.save(new Rhyme(word, rhymesArray));
+            if (!rhymesList.isEmpty()) {
+                rhymeRepository.save(new Rhyme(word, rhymesArray));
+            }
 
             return rhymesArray;
         }
