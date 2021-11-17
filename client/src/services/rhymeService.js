@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8080/api/rhyme';
+const baseUrl = 'https://dapple-api.herokuapp.com/api/rhyme';
 
 const getAll = async (word) => {
   const res = await axios.get(`${baseUrl}?word=${word}`);
