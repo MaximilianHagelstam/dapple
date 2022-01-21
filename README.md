@@ -14,7 +14,7 @@
 
 - Spring Boot
 - PostgreSQL
-- React.js
+- React
 - Material UI
 - RhymeZone API
 
